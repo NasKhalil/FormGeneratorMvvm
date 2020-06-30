@@ -1,4 +1,4 @@
-package com.example.formgenerator;
+package com.example.formgenerator.splash;
 
 import android.content.Intent;
 
@@ -13,7 +13,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class FireBaseAuthRepository {
+public class SplashScreenRepository {
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDatabase;
