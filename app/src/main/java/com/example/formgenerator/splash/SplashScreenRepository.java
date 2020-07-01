@@ -1,7 +1,5 @@
 package com.example.formgenerator.splash;
 
-import android.content.Intent;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
@@ -23,7 +21,7 @@ public class SplashScreenRepository {
     private void initFireBase() {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
-        // le curseur
+        // le curseurz
         mRefrence = mDatabase.getReference("user");
 
     }
@@ -36,10 +34,10 @@ public class SplashScreenRepository {
         }
         else
         {
-            curentuser.postValue("disconected ");
+            curentuser.postValue("disconected");
         }
 
-        return curentuser ;
+        return curentuser;
     }
 
     public MutableLiveData<User> getUserData (String uid){
@@ -48,15 +46,12 @@ public class SplashScreenRepository {
          @Override
          public void onDataChange(@NonNull DataSnapshot snapshot) {
              User user = snapshot.getValue(User.class);
-
              userData.postValue(user);
-
          }
 
          @Override
          public void onCancelled(@NonNull DatabaseError error) {
              userData.postValue(new User());
-
          }
      });
         return userData ;

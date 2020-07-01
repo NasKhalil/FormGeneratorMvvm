@@ -14,13 +14,16 @@
             android:name=".main.MainActivity2"
             android:label="@string/title_activity_main2"></activity>
         <activity android:name=".inscription.InscriptionActivity" />
-        <activity android:name=".login.LoginActivity" />
-        <activity android:name=".splash.SplashScreen">
+        <activity android:name=".login.LoginActivity" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".splash.SplashScreen">
+
         </activity>
         <activity android:name=".MainActivity" />
     </application>
