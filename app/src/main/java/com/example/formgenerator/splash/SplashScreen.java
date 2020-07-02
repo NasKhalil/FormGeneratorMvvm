@@ -31,8 +31,23 @@ public class SplashScreen extends AppCompatActivity {
             if (!s.equals("disconected"))
             {
                 splashScreenViewModel.getUser(s).observe(SplashScreen.this, user -> {
-
+                    if (user.getType() == 1){
+                        /**
+                         *
+                         * Todo: admin interface
+                         */
+                    }else
+                    {
+                        /**
+                         * Todo: user interface
+                         */
+                    }
                 });
+            }
+            else {
+                /**
+                 *  todo: login_activity
+                 */
             }
         });
 
