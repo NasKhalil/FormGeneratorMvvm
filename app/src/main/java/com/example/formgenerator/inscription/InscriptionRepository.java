@@ -1,17 +1,9 @@
 package com.example.formgenerator.inscription;
 
-import android.content.Intent;
 import android.net.Uri;
-import android.view.View;
-
-import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.formgenerator.model.User;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -30,7 +22,8 @@ public class InscriptionRepository {
     public void initFirebase(){
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
-        mRefrence = mDatabase.getReference();
+        mRefrence = mDatabase.getReference("user");
+        mStorage = FirebaseStorage.getInstance();
     }
 
     public MutableLiveData<InscriptionResponse> addUser(String name, String lastName, String mail, String pwd, String phone, Uri filePath) {
@@ -52,7 +45,8 @@ public class InscriptionRepository {
                         mUser.setUrl(task.getResult().toString());
                         mRefrence.child(mUser.getUid()).setValue(mUser).addOnCompleteListener(task3 -> {
                             setNewUser.postValue(new InscriptionResponse(true, "new user added"));
-                        });                    }
+                        });
+                    }
                 });
             }
             else {
