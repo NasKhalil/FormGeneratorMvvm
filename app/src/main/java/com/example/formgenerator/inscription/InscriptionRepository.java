@@ -1,6 +1,7 @@
 package com.example.formgenerator.inscription;
 
 import android.net.Uri;
+
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.formgenerator.model.User;
@@ -19,7 +20,7 @@ public class InscriptionRepository {
     User mUser = new User();
     MutableLiveData<InscriptionResponse> setNewUser = new MutableLiveData<>();
 
-    public void initFirebase(){
+    public void initFirebase() {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
         mRefrence = mDatabase.getReference("user");
@@ -30,9 +31,8 @@ public class InscriptionRepository {
         initFirebase();
 
         mAuth.createUserWithEmailAndPassword(mail, pwd).addOnCompleteListener(task -> {
-            if (task.isSuccessful()){
+            if (task.isSuccessful()) {
                 mUser.setUid(task.getResult().getUser().getUid());
-
                 mUser.setName(name);
                 mUser.setLastName(lastName);
                 mUser.setMail(mail);
@@ -42,21 +42,18 @@ public class InscriptionRepository {
                 StorageReference child = mStorage.getReference().child(mUser.getUid());
                 child.putFile(filePath).continueWithTask(task1 -> child.getDownloadUrl()).addOnCompleteListener(task2 -> {
                     if (task2.isSuccessful()) {
-                        mUser.setUrl(task.getResult().toString());
+                        mUser.setUrl(task2.getResult().toString());
                         mRefrence.child(mUser.getUid()).setValue(mUser).addOnCompleteListener(task3 -> {
                             setNewUser.postValue(new InscriptionResponse(true, "new user added"));
                         });
                     }
                 });
-            }
-            else {
+            } else {
                 setNewUser.postValue(new InscriptionResponse(false, task.getException().getMessage()));
             }
         });
         return setNewUser;
     }
-
-
 
 
 }

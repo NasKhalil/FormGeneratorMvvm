@@ -33,6 +33,8 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
         binding.login.setOnClickListener(v -> login());
+
+        binding.register.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, InscriptionActivity.class)));
     }
 
     private void login() {
@@ -53,7 +55,6 @@ public class LoginActivity extends AppCompatActivity {
                         binding.progressBarLogin.setVisibility(View.GONE);
                         Snackbar.make(binding.getRoot(), result.getMsg(), Snackbar.LENGTH_LONG).show();
                     }
-
                 });
 
             }

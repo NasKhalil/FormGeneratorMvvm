@@ -1,4 +1,4 @@
-package com.example.formgenerator.splash;
+package com.example.formgenerator.main.ui.notifications;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
@@ -11,18 +11,21 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class SplashScreenRepository {
+public class ProfileRepository {
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mRefrence;
+
     MutableLiveData<String> curentuser = new MutableLiveData<>();
     MutableLiveData<User> userData = new MutableLiveData<>();
+
     private void initFireBase() {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
         mRefrence = mDatabase.getReference("user");
     }
+
 
     public MutableLiveData<String> getData (){
         initFireBase();
@@ -38,20 +41,22 @@ public class SplashScreenRepository {
         return curentuser;
     }
 
-    public MutableLiveData<User> getUserData (String uid){
+    public MutableLiveData<User> displayUserData(String uid){
+        mRefrence.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User user = snapshot.getValue(User.class);
+                userData.postValue(user);
 
-     mRefrence.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-         @Override
-         public void onDataChange(@NonNull DataSnapshot snapshot) {
-             User user = snapshot.getValue(User.class);
-             userData.postValue(user);
-         }
+            }
 
-         @Override
-         public void onCancelled(@NonNull DatabaseError error) {
-             userData.postValue(new User());
-         }
-     });
-        return userData ;
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+        return userData;
     }
 }

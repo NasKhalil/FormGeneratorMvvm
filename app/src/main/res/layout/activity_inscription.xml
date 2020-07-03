@@ -59,7 +59,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/name"
-            android:inputType="text"
+            android:inputType="textCapSentences"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Name" />
@@ -80,7 +80,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/lastName"
-            android:inputType="text"
+            android:inputType="textCapSentences"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Last name" />
@@ -132,25 +132,25 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout7"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="8dp"
+        app:counterEnabled="true"
+        app:counterMaxLength="8"
+        app:endIconMode="clear_text"
         app:layout_constraintEnd_toStartOf="@+id/guideline6"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout6"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:endIconMode="clear_text"
-        app:counterEnabled="true"
-        app:counterMaxLength="8">
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout6">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/phone"
-            android:inputType="number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Phone" />
+            android:hint="Phone"
+            android:inputType="number" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
