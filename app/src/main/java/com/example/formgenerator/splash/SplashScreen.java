@@ -17,9 +17,11 @@ import com.example.formgenerator.databinding.ActivitySplashScreenBinding;
 import com.example.formgenerator.login.LoginActivity;
 import com.example.formgenerator.main.MainActivity2;
 import com.example.formgenerator.model.User;
+import com.example.formgenerator.utils.SessionManager;
 
 public class SplashScreen extends AppCompatActivity {
     ActivitySplashScreenBinding binding;
+
     SplashScreenViewModel splashScreenViewModel ;
 
     @Override
@@ -62,6 +64,7 @@ public class SplashScreen extends AppCompatActivity {
             if (!s.equals("disconected"))
             {
                 splashScreenViewModel.getUser(s).observe(SplashScreen.this, user -> {
+
                     if (user.getType() == 1){
                         startActivity(new Intent(SplashScreen.this, MainActivity.class));
                     }else

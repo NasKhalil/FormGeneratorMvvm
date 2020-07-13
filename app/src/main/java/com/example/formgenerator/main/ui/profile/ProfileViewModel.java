@@ -1,19 +1,16 @@
-package com.example.formgenerator.main.ui.notifications;
+package com.example.formgenerator.main.ui.profile;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.formgenerator.model.User;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
-public class NotificationsViewModel extends ViewModel {
+public class ProfileViewModel extends ViewModel {
 
     ProfileRepository profileRepository;
 
-    public NotificationsViewModel() {
+    public ProfileViewModel() {
         profileRepository = new ProfileRepository();
     }
 
@@ -24,4 +21,8 @@ public class NotificationsViewModel extends ViewModel {
     LiveData<User> displayUserData(String uid){
         return profileRepository.displayUserData(uid);
     }
+
+    LiveData<FirebaseAuth> signOutUser() { return profileRepository.signOutUser() ;}
+
+    LiveData<User> editUserData(String uid, String name, String lastName, String mail, String phone){ return profileRepository.editUserData(uid,  name, lastName, mail, phone); }
 }

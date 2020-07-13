@@ -15,6 +15,7 @@ import com.example.formgenerator.R;
 import com.example.formgenerator.databinding.ActivityLoginBinding;
 import com.example.formgenerator.inscription.InscriptionActivity;
 import com.example.formgenerator.main.MainActivity2;
+import com.example.formgenerator.utils.SessionManager;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseApp;
 
@@ -23,6 +24,7 @@ import java.security.acl.Owner;
 public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
     LoginViewModel loginViewModel;
+    SessionManager sessionManager ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +46,9 @@ public class LoginActivity extends AppCompatActivity {
 
             if (validEmail() && validPassword()) {
                 loginViewModel.getUserData(mail, pwd).observe(LoginActivity.this, result -> {
-
+                    // shared preferences save login details
+                    sessionManager = new SessionManager(getApplicationContext());
+                    sessionManager.saveLoginDetails(result.getmUser().getName(), result.getmUser().getMail());
                     if (result.isResult()) {
                         binding.login.setVisibility(View.GONE);
                         binding.progressBarLogin.setVisibility(View.VISIBLE);
@@ -56,7 +60,6 @@ public class LoginActivity extends AppCompatActivity {
                         Snackbar.make(binding.getRoot(), result.getMsg(), Snackbar.LENGTH_LONG).show();
                     }
                 });
-
             }
         }
     }
