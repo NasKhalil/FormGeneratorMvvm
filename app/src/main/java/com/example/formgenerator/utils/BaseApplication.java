@@ -1,12 +1,20 @@
 package com.example.formgenerator.utils;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.pdf.PdfDocument;
 import android.os.Environment;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.ColorRes;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -17,6 +25,9 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
     }
+
+
+
 
 
     private void createPdfDoc() {

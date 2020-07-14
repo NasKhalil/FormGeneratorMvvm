@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -16,6 +17,7 @@ import com.example.formgenerator.databinding.ActivityLoginBinding;
 import com.example.formgenerator.inscription.InscriptionActivity;
 import com.example.formgenerator.main.MainActivity2;
 import com.example.formgenerator.utils.SessionManager;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseApp;
 
@@ -99,4 +101,14 @@ public class LoginActivity extends AppCompatActivity {
         return  valide ;
     }
 
+    @Override
+    public void onBackPressed() {
+        new MaterialAlertDialogBuilder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("EXIT")
+                .setMessage("Are you sure you want to close application")
+                .setPositiveButton("Yes", (dialog, which) -> finish())
+                .setNegativeButton("No", null)
+                .show();
+    }
 }

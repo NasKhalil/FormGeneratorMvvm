@@ -24,5 +24,5 @@ public class ProfileViewModel extends ViewModel {
 
     LiveData<FirebaseAuth> signOutUser() { return profileRepository.signOutUser() ;}
 
-    LiveData<User> editUserData(String uid, String name, String lastName, String mail, String phone){ return profileRepository.editUserData(uid,  name, lastName, mail, phone); }
+    LiveData<User> editUserData(String uid, String name, String lastName, String mail, String phone, String url){ return profileRepository.editUserData(uid,  name, lastName, mail, phone, url); }
 }

@@ -1,9 +1,11 @@
 package com.example.formgenerator.main;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import com.example.formgenerator.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -28,4 +30,14 @@ public class MainActivity2 extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
     }
 
+    @Override
+    public void onBackPressed() {
+        new MaterialAlertDialogBuilder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("EXIT")
+                .setMessage("Are you sure you want to close application")
+                .setPositiveButton("Yes", (dialog, which) -> finish())
+                .setNegativeButton("No", null)
+                .show();
+    }
 }

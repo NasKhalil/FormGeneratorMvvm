@@ -50,7 +50,7 @@ public class ProfileRepository {
     }
 
     public MutableLiveData<User> displayUserData(String uid){
-        mRefrence.child(uid).addValueEventListener(new ValueEventListener() {
+        mRefrence.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
@@ -65,28 +65,18 @@ public class ProfileRepository {
         return userData;
     }
 
-    public MutableLiveData<User> editUserData(String uid, String name, String lastName, String mail, String phone){
-
-        mRefrence.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User user = snapshot.getValue(User.class);
+    public MutableLiveData<User> editUserData(String uid, String name, String lastName, String mail, String phone, String url){
+                User user = new User();
                 user.setName(name);
                 user.setLastName(lastName);
                 user.setMail(mail);
                 user.setPhone(phone);
-                mRefrence.child(user.getUid()).setValue(user).addOnCompleteListener(task -> {
+                user.setUrl(url);
+                mRefrence.child(uid).setValue(user).addOnCompleteListener(task -> {
                     if (task.isSuccessful()){
                         editUser.postValue(user);
                     }
-                });
 
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
         });
 
         return userData;
