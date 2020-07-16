@@ -107,6 +107,8 @@ public class ProfileFragment extends Fragment {
                             binding.phoneEdit.setText(user.getPhone());
                             loadingDialog.dismissDialog();
                         }));
+
+
     }
 
 
