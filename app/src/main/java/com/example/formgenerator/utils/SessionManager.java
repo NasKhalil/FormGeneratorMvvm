@@ -25,11 +25,4 @@ public class SessionManager {
         return sharedPreferences.getString("Name", "");
     }
 
-    public void saveFormData(String pLunch, String pEvening, String checkOutArea, String nbOfCleaningStuff, String remarks, String customerProblems){
-        SharedPreferences sharedPreferences = context.getSharedPreferences("FormDetails", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        /**
-         * TODO: get form data
-         */
-    }
 }

@@ -44,16 +44,7 @@ public class MainActivity2 extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-        BottomNavigationView bottomNavigationView = new BottomNavigationView(MainActivity2.this);
 
-        bottomNavigationView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-
-            }
-        });
-
-        binding.addForms.setOnClickListener(v -> showDialog(MainActivity2.this));
     }
 
 
@@ -108,4 +99,7 @@ public class MainActivity2 extends AppCompatActivity {
 
         dialog.show();
     }
+
+
+
 }

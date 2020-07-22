@@ -4,13 +4,27 @@
     <color name="colorPrimaryDark">#0A2463</color>
     <color name="colorAccent">#59CD90</color>
     <color name="chineseYellow">#F6AE2D</color>
-    <color name="red_color">#B50707</color>
+    <color name="red_color">#CD0A0F</color>
     <color name="status">#55828B</color>
     <color name="status_splash">#FF05C1FF</color>
     <color name="color_gray">#4C4C4C</color>
     <color name="orange_web">#FFA400</color>
     <color name="granny_smith_apple">#9EE493</color>
     <color name="maximum_red">#DE1A1A</color>
+    <color name="pumpkin">#FA7921</color>
+    <color name="white">#fff</color>
+    <color name="green">#1F6717</color>
+    <color name="royal_blue">#01295F</color>
+    <color name="black">#000</color>
+
+    <array name="palette_color">
+        <item>@color/black</item>
+        <item>@color/colorPrimary</item>
+        <item>@color/royal_blue</item>
+        <item>@color/orange_web</item>
+        <item>@color/red_color</item>
+        <item>@color/green</item>
+    </array>
 
 
 </resources>
