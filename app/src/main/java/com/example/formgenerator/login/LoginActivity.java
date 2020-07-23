@@ -16,6 +16,7 @@ import com.example.formgenerator.R;
 import com.example.formgenerator.databinding.ActivityLoginBinding;
 import com.example.formgenerator.inscription.InscriptionActivity;
 import com.example.formgenerator.main.MainActivity2;
+import com.example.formgenerator.model.User;
 import com.example.formgenerator.utils.SessionManager;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
@@ -26,7 +27,7 @@ import java.security.acl.Owner;
 public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
     LoginViewModel loginViewModel;
-    SessionManager sessionManager ;
+    SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,57 +49,54 @@ public class LoginActivity extends AppCompatActivity {
 
             if (validEmail() && validPassword()) {
                 loginViewModel.getUserData(mail, pwd).observe(LoginActivity.this, result -> {
-                    // shared preferences save login details
-                    sessionManager = new SessionManager(getApplicationContext());
-                    sessionManager.saveLoginDetails(result.getmUser().getName(), result.getmUser().getMail());
-                    if (result.isResult()) {
-                        binding.login.setVisibility(View.GONE);
-                        binding.progressBarLogin.setVisibility(View.VISIBLE);
-                        LoginActivity.this.startActivity(new Intent(LoginActivity.this, MainActivity2.class));
-                        LoginActivity.this.finish();
-                    } else {
-                        binding.login.setVisibility(View.VISIBLE);
-                        binding.progressBarLogin.setVisibility(View.GONE);
-                        Snackbar.make(binding.getRoot(), result.getMsg(), Snackbar.LENGTH_LONG).show();
-                    }
+                    loginViewModel.loginRepository.getUserData().observe(LoginActivity.this, new Observer<User>() {
+                        @Override
+                        public void onChanged(User user) {
+                            // shared preferences save login details
+                            sessionManager = new SessionManager(getApplicationContext());
+                            sessionManager.saveLoginDetails(user.getName(), user.getMail());
+                            binding.login.setVisibility(View.GONE);
+                            binding.progressBarLogin.setVisibility(View.VISIBLE);
+                            LoginActivity.this.startActivity(new Intent(LoginActivity.this, MainActivity2.class));
+                            LoginActivity.this.finish();
+                        }
+                    });
                 });
             }
         }
     }
 
     private boolean isEmpty() {
-        boolean empty = false ;
+        boolean empty = false;
 
-        if (TextUtils.isEmpty(binding.mail.getText()))
-        {
-            empty = true ;
+        if (TextUtils.isEmpty(binding.mail.getText())) {
+            empty = true;
             binding.mail.setError("Empty Field");
         }
-        if ((TextUtils.isEmpty(binding.pwd.getText())))
-        {
-            empty = true ;
+        if ((TextUtils.isEmpty(binding.pwd.getText()))) {
+            empty = true;
             binding.pwd.setError("Empty Field");
         }
-        return  empty ;
+        return empty;
     }
-    private boolean validEmail(){
-        boolean valid = true ;
-        if (!Patterns.EMAIL_ADDRESS.matcher(binding.mail.getText()).matches())
-        {
-            valid = false ;
+
+    private boolean validEmail() {
+        boolean valid = true;
+        if (!Patterns.EMAIL_ADDRESS.matcher(binding.mail.getText()).matches()) {
+            valid = false;
             binding.mail.setError("Enter a valid Email");
         }
 
-        return valid ;
+        return valid;
     }
-    private boolean validPassword (){
-        boolean valide = true ;
-        if (binding.pwd.getText().length() <6)
-        {
-            valide = false ;
+
+    private boolean validPassword() {
+        boolean valide = true;
+        if (binding.pwd.getText().length() < 6) {
+            valide = false;
             binding.pwd.setError("6 caracters minimun ");
         }
-        return  valide ;
+        return valide;
     }
 
     @Override

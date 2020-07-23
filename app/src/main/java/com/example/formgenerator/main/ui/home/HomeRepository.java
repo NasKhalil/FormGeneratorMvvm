@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.formgenerator.model.Form;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -16,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HomeRepository {
+    Form mForm = new Form();
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDatabase;
@@ -31,6 +34,7 @@ public class HomeRepository {
 
 
     MutableLiveData<List<Form>> cForm = new MutableLiveData<>();
+    MutableLiveData<Form> addForm = new MutableLiveData<>();
 
 
 
@@ -44,7 +48,7 @@ public class HomeRepository {
                 List<Form> list = new ArrayList<>();
                 for (DataSnapshot child : snapshot.getChildren()) {
                      f = child.getValue(Form.class);
-                     f.setId(Integer.parseInt(child.getKey()));
+                    //  f.setId(Integer.parseInt(child.getKey()));
                     list.add(f);
                 }
                 cForm.postValue(list);
@@ -56,6 +60,25 @@ public class HomeRepository {
             }
         });
         return cForm;
+    }
+
+    public MutableLiveData<Form> addNewForm( String form_tittle, String creator, String insert_date){
+        initFireBase();
+
+
+        DatabaseReference push = mRefrence.push();
+        push.setValue(mForm).addOnCompleteListener(task -> {
+            mForm.setId(push.getKey());
+            mForm.setForm_tittle(form_tittle);
+            mForm.setCreator(creator);
+            mForm.setInsert_date(insert_date);
+            if (task.isSuccessful()){
+                addForm.setValue(mForm);
+            }
+
+        });
+
+        return addForm;
     }
 
 

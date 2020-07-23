@@ -13,6 +13,6 @@ public class LoginViewModel extends ViewModel {
 
 
     LiveData<LoginResponse> getUserData(String mail, String pwd) {
-        return loginRepository.getUserData(mail, pwd);
+        return loginRepository.loginOperation(mail, pwd);
     }
 }

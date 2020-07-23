@@ -16,9 +16,11 @@ import java.util.List;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     List<Form> forms;
+    private onFormListener onFormListener;
 
-    public MyAdapter(List<Form> forms) {
+    public MyAdapter(List<Form> forms, onFormListener onFormListener) {
         this.forms = forms;
+        this.onFormListener = onFormListener;
     }
 
     @NonNull
@@ -27,7 +29,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home, parent, false);
 
-        return new MyAdapter.MyViewHolder(view);
+        return new MyAdapter.MyViewHolder(view, onFormListener);
     }
 
     @Override
@@ -45,14 +47,28 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         return forms.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView title, creator, date;
-        public MyViewHolder(@NonNull View itemView) {
+
+        public MyViewHolder(@NonNull View itemView, onFormListener onFormListener) {
             super(itemView);
 
             title = itemView.findViewById(R.id.form_tittle);
             creator = itemView.findViewById(R.id.creator);
             date = itemView.findViewById(R.id.insert_date);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+                onFormListener.onFormClick(getAdapterPosition());
         }
     }
+
+
+    public interface onFormListener {
+        void onFormClick(int position);
+    }
+
+
 }

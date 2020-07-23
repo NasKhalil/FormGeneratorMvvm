@@ -2,6 +2,7 @@ package com.example.formgenerator.main.ui.home;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.se.omapi.Session;
@@ -18,11 +19,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.formgenerator.MainActivity;
 import com.example.formgenerator.R;
 import com.example.formgenerator.adapter.MyAdapter;
 import com.example.formgenerator.databinding.FragmentHomeBinding;
+import com.example.formgenerator.main.FormActivity;
 import com.example.formgenerator.main.MainActivity2;
 import com.example.formgenerator.model.Form;
 import com.example.formgenerator.utils.SessionManager;
@@ -31,7 +35,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements MyAdapter.onFormListener {
     SessionManager sessionManager;
 
     private FragmentHomeBinding binding;
@@ -46,7 +50,7 @@ public class HomeFragment extends Fragment {
              new ViewModelProvider(this).get(HomeViewModel.class);
         binding = FragmentHomeBinding.inflate(getLayoutInflater());
 
-        adapter = new MyAdapter(myForms);
+        adapter = new MyAdapter(myForms, this);
 
         return binding.getRoot();
     }
@@ -63,10 +67,12 @@ public class HomeFragment extends Fragment {
             getData();
         });
 
+
+
         binding.formAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialog(getActivity());
+                HomeFragment.this.showDialog(HomeFragment.this.getActivity());
             }
         });
 
@@ -98,28 +104,40 @@ public class HomeFragment extends Fragment {
         String currentDate =  android.text.format.DateFormat.format("yyyy/MM/dd", new java.util.Date()).toString();
         date.setText(currentDate);
 
+        TextInputEditText formTitle = dialog.findViewById(R.id.form_title);
+
+
 
         TextInputEditText user = dialog.findViewById(R.id.user);
         user.setText(sessionManager.getUserName());
         Log.d("name", sessionManager.getUserName());
+
+
+
         Button dialogBtn_cancel =  dialog.findViewById(R.id.btn_cancel);
-        dialogBtn_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.cancel();
-            }
-        });
+        dialogBtn_cancel.setOnClickListener(v -> dialog.cancel());
 
         Button dialogBtn_okay = (Button) dialog.findViewById(R.id.btn_okay);
-        dialogBtn_okay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(),"Okay" ,Toast.LENGTH_LONG).show();
-            }
+        dialogBtn_okay.setOnClickListener(v -> {
+            String userText = user.getText().toString();
+            String dateText = date.getText().toString();
+            String f_title = formTitle.getText().toString();
+            homeViewModel.addNewForm(f_title, userText, dateText).observe(HomeFragment.this, form -> {
+                Toast.makeText(getContext(),"New Form added" ,Toast.LENGTH_LONG).show();
+                dialog.dismiss();
+            });
+
         });
 
         dialog.show();
     }
 
 
+    @Override
+    public void onFormClick(int position) {
+        Log.d("click", "onFormClick "+ position);
+        Intent intent = new Intent(requireContext(), FormActivity.class);
+        //intent.putExtra
+        startActivity(intent);
+    }
 }

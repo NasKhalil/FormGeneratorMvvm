@@ -15,17 +15,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".main.FormActivity"></activity>
         <activity
             android:name=".main.MainActivity2"
             android:label="@string/title_activity_main2" />
         <activity
             android:name=".inscription.InscriptionActivity"
             android:label="Register"
-            android:theme="@style/NoAppBarTheme"></activity>
+            android:theme="@style/NoAppBarTheme" />
         <activity
             android:name=".login.LoginActivity"
             android:label="Login"
-            android:theme="@style/NoAppBarTheme"></activity>
+            android:theme="@style/NoAppBarTheme" />
         <activity
             android:name=".splash.SplashScreen"
             android:theme="@style/NoAppBarTheme">

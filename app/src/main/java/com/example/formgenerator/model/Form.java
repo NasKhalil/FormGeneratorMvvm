@@ -2,13 +2,13 @@ package com.example.formgenerator.model;
 
 public class Form {
 
-    private int id;
+    private String id;
     private String form_tittle;
     private String creator;
     private String insert_date;
 
 
-    public Form(int id, String form_tittle, String creator, String insert_date) {
+    public Form(String id, String form_tittle, String creator, String insert_date) {
         this.id = id;
         this.form_tittle = form_tittle;
         this.creator = creator;
@@ -26,11 +26,11 @@ public class Form {
 
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

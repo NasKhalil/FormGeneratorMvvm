@@ -19,4 +19,7 @@ public class HomeViewModel extends ViewModel {
     LiveData<List<Form>> displayForms(){
         return homeRepository.getcForm();
     }
+    LiveData<Form> addNewForm(String form_tittle, String creator, String insert_date) {
+        return homeRepository.addNewForm( form_tittle,  creator,  insert_date);
+    }
 }
