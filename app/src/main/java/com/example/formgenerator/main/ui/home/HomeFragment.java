@@ -37,6 +37,7 @@ import java.util.List;
 
 public class HomeFragment extends Fragment implements MyAdapter.onFormListener {
     SessionManager sessionManager;
+    private final int x= 0;
 
     private FragmentHomeBinding binding;
     MyAdapter adapter;
