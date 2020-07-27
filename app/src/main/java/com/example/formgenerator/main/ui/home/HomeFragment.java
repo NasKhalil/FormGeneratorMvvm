@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.se.omapi.Session;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,14 +69,7 @@ public class HomeFragment extends Fragment implements MyAdapter.onFormListener {
             getData();
         });
 
-
-
-        binding.formAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HomeFragment.this.showDialog(HomeFragment.this.getActivity());
-            }
-        });
+        binding.formAdd.setOnClickListener(v -> HomeFragment.this.showDialog(HomeFragment.this.getActivity()));
 
     }
 
@@ -107,27 +101,28 @@ public class HomeFragment extends Fragment implements MyAdapter.onFormListener {
 
         TextInputEditText formTitle = dialog.findViewById(R.id.form_title);
 
-
-
         TextInputEditText user = dialog.findViewById(R.id.user);
         user.setText(sessionManager.getUserName());
         Log.d("name", sessionManager.getUserName());
-
-
 
         Button dialogBtn_cancel =  dialog.findViewById(R.id.btn_cancel);
         dialogBtn_cancel.setOnClickListener(v -> dialog.cancel());
 
         Button dialogBtn_okay = (Button) dialog.findViewById(R.id.btn_okay);
         dialogBtn_okay.setOnClickListener(v -> {
+
             String userText = user.getText().toString();
             String dateText = date.getText().toString();
             String f_title = formTitle.getText().toString();
-            homeViewModel.addNewForm(f_title, userText, dateText).observe(HomeFragment.this, form -> {
-                Toast.makeText(getContext(),"New Form added" ,Toast.LENGTH_LONG).show();
-                dialog.dismiss();
-            });
-
+            if (TextUtils.isEmpty(f_title)){
+                formTitle.setError("field is empty");
+            }
+            else {
+                homeViewModel.addNewForm(f_title, userText, dateText).observe(getViewLifecycleOwner(), form -> {
+                    Toast.makeText(getContext(),"New Form added" ,Toast.LENGTH_LONG).show();
+                    dialog.dismiss();
+                });
+            }
         });
 
         dialog.show();
@@ -138,7 +133,7 @@ public class HomeFragment extends Fragment implements MyAdapter.onFormListener {
     public void onFormClick(int position) {
         Log.d("click", "onFormClick "+ position);
         Intent intent = new Intent(requireContext(), FormActivity.class);
-        //intent.putExtra
+        //intent.putExtra("form", )
         startActivity(intent);
     }
 }

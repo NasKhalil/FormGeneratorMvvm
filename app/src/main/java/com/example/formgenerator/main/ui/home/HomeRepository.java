@@ -32,11 +32,8 @@ public class HomeRepository {
         mStorage = FirebaseStorage.getInstance();
     }
 
-
     MutableLiveData<List<Form>> cForm = new MutableLiveData<>();
     MutableLiveData<Form> addForm = new MutableLiveData<>();
-
-
 
     public MutableLiveData<List<Form>> getcForm(){
         initFireBase();
@@ -64,22 +61,18 @@ public class HomeRepository {
 
     public MutableLiveData<Form> addNewForm( String form_tittle, String creator, String insert_date){
         initFireBase();
-
-
         DatabaseReference push = mRefrence.push();
+        mForm.setId(push.getKey());
+        mForm.setForm_tittle(form_tittle);
+        mForm.setCreator(creator);
+        mForm.setInsert_date(insert_date);
         push.setValue(mForm).addOnCompleteListener(task -> {
-            mForm.setId(push.getKey());
-            mForm.setForm_tittle(form_tittle);
-            mForm.setCreator(creator);
-            mForm.setInsert_date(insert_date);
             if (task.isSuccessful()){
                 addForm.setValue(mForm);
             }
-
         });
 
         return addForm;
     }
-
 
 }
